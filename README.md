@@ -1,7 +1,7 @@
 # esphome_alecto
 EspHome Alecto wheater station component
-The component supports LIDL wheather station H13726 which communicates using alecto protocol
-The protocol is described here: https://wiki.pilight.org/auriol_protocol_v20.pdf
+
+The component supports LIDL wheather station H13726 which communicates using alecto protocol. The protocol is described here: https://wiki.pilight.org/auriol_protocol_v20.pdf
 
 # Hardware
 
