@@ -1,0 +1,65 @@
+esphome:
+  name: alecto
+  platform: ESP32
+  board: lolin32
+  includes:
+    - alecto_receiver.h
+
+wifi:
+  ssid: !secret ssid_dol
+  password: !secret wifi_password
+
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  
+
+# Enable logging
+logger:
+
+ota:
+  password: !secret ota_password
+  
+
+remote_receiver:
+  id: receiver
+  pin: 
+    number: GPIO27
+  idle: 6ms
+  filter: 200us
+  tolerance: 35%
+
+
+sensor:
+- platform: custom
+  lambda: |-
+    auto alecto_receiver = new AlectoComponent(id(receiver),0x6c,0x0b);
+    App.register_component(alecto_receiver);
+    return {&alecto_receiver->tempSensor, &alecto_receiver->humiditySensor, &alecto_receiver->rainSensor,  &alecto_receiver->windAvgSensor,  &alecto_receiver->windGustSensor,  &alecto_receiver->windDirSensor,  &alecto_receiver->tempBatterySensor,  &alecto_receiver->rainBatterySensor};
+  sensors:
+  - name: "Temperature meteo"
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+  - name: "Humidity meteo"
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+  - name: "Rain meteo"
+    unit_of_measurement: "mm"
+    accuracy_decimals: "1"
+  - name: "Wind avg meteo"
+    unit_of_measurement: "m/s"
+    accuracy_decimals: "1"
+  - name: "Wind gust meteo"
+    unit_of_measurement: "m/s"
+    accuracy_decimals: "1"
+  - name: "Wind dir meteo"
+    unit_of_measurement: "°"
+    accuracy_decimals: "1"
+  - name: "Battery temp meteo"
+    unit_of_measurement: "%"
+    accuracy_decimals: "0"
+  - name: "Battery rain meteo"
+    unit_of_measurement: "%"
+    accuracy_decimals: "0"
+    
