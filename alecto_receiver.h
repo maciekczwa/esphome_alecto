@@ -98,7 +98,7 @@ public:
     // }
 
     int id = n[0] + (n[1] << 4);
-    boolean battery = !(n[2] & 0b00001000);
+    boolean battery = !(n[2] & 0b00000001);
     ESP_LOGD(ALECTO_TAG, "id: %x, battery: %d", id, battery);
     int16_t temperature = 0;
     float windavg = 0;
